@@ -1,4 +1,4 @@
-const CACHE = 'patrimonio-v4.4';
+const CACHE = 'patrimonio-v4.5';
 const FILES = ['./', './index.html', './styles.css', './app.js', './manifest.json', './icon.png'];
 
 self.addEventListener('install', e => {

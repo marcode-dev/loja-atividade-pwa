@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   carregarProduto();
   renderizarProduto();
 
-  document.getElementById('patrimonioForm').addEventListener('submit', adicionarPatrimonio);
+  document.getElementById('produtoForm').addEventListener('submit', adicionarProduto);
 
   const installBtn = document.getElementById('installBtn');
   if (installBtn) {
@@ -49,7 +49,7 @@ function carregarProduto() {
 
 //renderiza produto na tela
 function renderizarProduto() {
-  const lista = document.getElementById("patrimonioList");
+  const lista = document.getElementById("produtoList");
 
   if (produto.length === 0) {
     lista.innerHTML = '<p class="empty-message">Nenhum Produto registrado</p>'
@@ -57,22 +57,22 @@ function renderizarProduto() {
   }
 
   lista.innerHTML = produto.map(p => `
-    <div class="patrimonio-item">
+    <div class="produto-item">
       <div>
         <img src="${p.image}" class="img-frame"/>
       </div>
-      <div>
+      <div class="complete">
         <strong>${escapeHtml(p.nome)}</strong>
         <p>${escapeHtml(p.valor)}</p>
         <p>${escapeHtml(p.descricao)}</p>
-        <div class="patrimonio-actions">
+        <div class="produto-actions">
 
           <button class="btn btn-check ${p.conferido ? 'checked' : ''}" 
           onclick="alternarConferencia(${p.id})">
             ${p.conferido ? 'Conferido' : 'A Conferir'}
           </button>
 
-          <button class="btn btn-delete" onclick="deletarPatrimonio(${p.id})">
+          <button class="btn btn-delete" onclick="deletarProduto(${p.id})">
           Remover
           </button>
         </div>
@@ -107,7 +107,7 @@ function salvarProduto() {
 }
 
 //adiciona novo registro !!!!!
-function adicionarPatrimonio(e) {
+function adicionarProduto(e) {
   e.preventDefault();
 
   const nomeProduto = document.getElementById('nomeProduto').value.trim();
@@ -121,7 +121,7 @@ function adicionarPatrimonio(e) {
   }
 
 
-  const novoPatrimonio = {
+  const novoproduto = {
     id: Date.now(),
     nome: nomeProduto,
     valor: precoProduto,
@@ -132,10 +132,10 @@ function adicionarPatrimonio(e) {
     dataConferencia: null
   };
 
-  produto.push(novoPatrimonio)
+  produto.push(novoproduto)
   salvarProduto();
 
-  document.getElementById('patrimonioForm').reset();
+  document.getElementById('produtoForm').reset();
   toggleFormSection();
 
   renderizarProduto();
@@ -144,22 +144,22 @@ function adicionarPatrimonio(e) {
 }
 
 function alternarConferencia(id) {
-  const patrimonio = produto.find(p => p.id === id);
-  if (patrimonio) {
-    patrimonio.conferido = !patrimonio.conferido;
-    patrimonio.dataConferencia =
-      patrimonio.conferido ? new Date().toLocaleDateString("pt-BR") : null;
+  const produto = produto.find(p => p.id === id);
+  if (produto) {
+    produto.conferido = !produto.conferido;
+    produto.dataConferencia =
+      produto.conferido ? new Date().toLocaleDateString("pt-BR") : null;
     salvarProduto();
     renderizarProduto();
 
-    const status = patrimonio.conferido ? 'conferido' : 'marcado como não conferido';
+    const status = produto.conferido ? 'conferido' : 'marcado como não conferido';
     mostrarNotificacao(`Produto ${status}`);
   }
 }
 
 //deletar
-function deletarPatrimonio(id) {
-  if (confirm('Tem certeza que deseja apagar este patrimonio?')) {
+function deletarProduto(id) {
+  if (confirm('Tem certeza que deseja apagar este produto?')) {
     produto = produto.filter(p => p.id !== id);
     salvarProduto();
     renderizarProduto();
@@ -177,4 +177,4 @@ function escapeHtml(text) {
 // Expor funções usadas por atributos `onclick` quando o script é carregado como módulo
 window.toggleFormSection = toggleFormSection;
 window.alternarConferencia = alternarConferencia;
-window.deletarPatrimonio = deletarPatrimonio;
+window.deletarProduto = deletarProduto;
