@@ -6,8 +6,8 @@ if ('serviceWorker' in navigator) {
   })
 }
 
-const STORAGE_KEY = "patrimonios";
-let patrimonios = [];
+const STORAGE_KEY = "produto";
+let produto = [];
 
 let deferredPrompt = null;
 
@@ -23,8 +23,8 @@ window.addEventListener('beforeInstallPrompt', (event) => {
 
 // Carregando...
 document.addEventListener('DOMContentLoaded', () => {
-  carregarPatrimonios();
-  renderizarPatrimonios();
+  carregarProduto();
+  renderizarProduto();
 
   document.getElementById('patrimonioForm').addEventListener('submit', adicionarPatrimonio);
 
@@ -41,22 +41,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 })
 
-//carrega patrimonios do localStorage
-function carregarPatrimonios() {
+//carrega produto do localStorage
+function carregarProduto() {
   const dados = localStorage.getItem(STORAGE_KEY);
-  patrimonios = dados ? JSON.parse(dados) : [];
+  produto = dados ? JSON.parse(dados) : [];
 }
 
-//renderiza patrimonios na tela
-function renderizarPatrimonios() {
+//renderiza produto na tela
+function renderizarProduto() {
   const lista = document.getElementById("patrimonioList");
 
-  if (patrimonios.length === 0) {
-    lista.innerHTML = '<p class="empty-message">Nenhum patrimônio registrado</p>'
+  if (produto.length === 0) {
+    lista.innerHTML = '<p class="empty-message">Nenhum Produto registrado</p>'
     return;
   }
 
-  lista.innerHTML = patrimonios.map(p => `
+  lista.innerHTML = produto.map(p => `
     <div class="patrimonio-item">
       <div>
         <img src="${p.image}" class="img-frame"/>
@@ -102,8 +102,8 @@ function mostrarNotificacao(mensagem) {
 }
 
 //grava no localStorage
-function salvarPatrimonios() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(patrimonios));
+function salvarProduto() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(produto));
 }
 
 //adiciona novo registro !!!!!
@@ -132,39 +132,39 @@ function adicionarPatrimonio(e) {
     dataConferencia: null
   };
 
-  patrimonios.push(novoPatrimonio)
-  salvarPatrimonios();
+  produto.push(novoPatrimonio)
+  salvarProduto();
 
   document.getElementById('patrimonioForm').reset();
   toggleFormSection();
 
-  renderizarPatrimonios();
+  renderizarProduto();
 
-  mostrarNotificacao("Patrimônio Adicionado!");
+  mostrarNotificacao("Produto Adicionado!");
 }
 
 function alternarConferencia(id) {
-  const patrimonio = patrimonios.find(p => p.id === id);
+  const patrimonio = produto.find(p => p.id === id);
   if (patrimonio) {
     patrimonio.conferido = !patrimonio.conferido;
     patrimonio.dataConferencia =
       patrimonio.conferido ? new Date().toLocaleDateString("pt-BR") : null;
-    salvarPatrimonios();
-    renderizarPatrimonios();
+    salvarProduto();
+    renderizarProduto();
 
     const status = patrimonio.conferido ? 'conferido' : 'marcado como não conferido';
-    mostrarNotificacao(`Patrimônio ${status}`);
+    mostrarNotificacao(`Produto ${status}`);
   }
 }
 
 //deletar
 function deletarPatrimonio(id) {
   if (confirm('Tem certeza que deseja apagar este patrimonio?')) {
-    patrimonios = patrimonios.filter(p => p.id !== id);
-    salvarPatrimonios();
-    renderizarPatrimonios();
+    produto = produto.filter(p => p.id !== id);
+    salvarProduto();
+    renderizarProduto();
 
-    mostrarNotificacao("Patrimônio removido com sucesso!");
+    mostrarNotificacao("Produto removido com sucesso!");
   }
 }
 

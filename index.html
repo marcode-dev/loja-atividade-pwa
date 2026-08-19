@@ -10,7 +10,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
 
-  <meta name="description" content="Aplicativo PWA para gerenciamento de patrimônio">
+  <meta name="description" content="Aplicativo PWA para gerenciamento de produtos">
   <title>Loja</title>
 
   <link rel="icon" href="./icon.png" type="image/png">
@@ -30,12 +30,12 @@
   </header>
 
   <div class="container">
-    <section class="section" id="botaoNovoPatrimonioSection">
+    <section class="section" id="botaoNovoProdutoSection">
       <button class="btn btn-large btn-success" onclick="toggleFormSection()">Novo Produto</button>
     </section>
     <section class="section" id="formSection">
       <h2>Novo Produto</h2>
-      <form action="" id="patrimonioForm">
+      <form action="" id="produtoForm">
         <div class="form-group">
           <label for="nomeProduto">Nome</label>
           <input type="text" id="nomeProduto" placeholder="Digite o nome do produto" required autocomplete="off">
@@ -46,7 +46,7 @@
         </div>
         <div class="form-group">
           <label for="precoProduto">Preço</label>
-          <input type="number" id="precoProduto" placeholder="R$00,00" required autocomplete="off">
+          <input type="number" id="precoProduto" step="0.01" placeholder="R$00,00" required autocomplete="off">
         </div>
         <div class="form-group">
           <label for="descricao">Descrição</label>
@@ -59,14 +59,14 @@
       </form>
     </section>
     <section class="section" id="tabelaSection">
-      <h2>Lista de Patrimônios</h2>
-      <div id="patrimonioList" class="patrimonio-list">
-        <p class="empty-message">Nenhum patrimônio registrado</p>
+      <h2>Lista de Produtos</h2>
+      <div id="produtoList" class="produto-list">
+        <p class="empty-message">Nenhum produto registrado</p>
       </div>
     </section>
   </div>
   <footer class="footer">
-    <p>Controle de Patrimônio</p>
+    <p>Controle de Produtos</p>
   </footer>
 </body>
 
